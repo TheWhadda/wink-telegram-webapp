@@ -3,11 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Telegram Movie Poster WebApp</title>
+    <title>Wink — Поиск постера</title>
     <link rel="stylesheet" href="/styles.css" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body>
+    <header class="logo-header">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 80" aria-label="Wink">
+        <defs>
+          <linearGradient id="wink-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FF7A3A"/>
+            <stop offset="100%" stop-color="#FF5B21"/>
+          </linearGradient>
+        </defs>
+        <text x="0" y="72" font-family="'Arial Black','Helvetica Neue',sans-serif"
+              font-weight="900" font-size="82" fill="white" letter-spacing="-3">WINK</text>
+        <!-- Chevron: two stacked right-pointing shapes forming ">" -->
+        <polygon points="272,4 316,42 272,80 292,80 336,42 292,4" fill="url(#wink-grad)"/>
+      </svg>
+    </header>
     <main class="container">
       <h1>Поиск постера фильма</h1>
       <p class="subtitle">Введите название фильма, чтобы получить изображение с вебхука.</p>
