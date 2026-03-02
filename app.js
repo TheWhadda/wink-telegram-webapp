@@ -40,7 +40,8 @@ form.addEventListener('submit', async (event) => {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.error || 'Не удалось получить изображение.');
+      const details = data.details ? `\nДетали: ${JSON.stringify(data.details)}` : '';
+      throw new Error((data.error || 'Не удалось получить изображение.') + details);
     }
 
     if (!data.imageUrl) {

@@ -28,16 +28,55 @@ export default async function handler(req, res) {
       body: JSON.stringify({ movieName }),
     });
 
-    const webhookData = await webhookResponse.json();
+    const rawBody = await webhookResponse.text();
+    let webhookData;
+
+    try {
+      webhookData = rawBody ? JSON.parse(rawBody) : null;
+    } catch {
+      webhookData = null;
+    }
 
     if (!webhookResponse.ok) {
+      const details = {
+        webhookStatus: webhookResponse.status,
+        webhookStatusText: webhookResponse.statusText,
+        webhookBody: webhookData || rawBody || null,
+      };
+
+      console.error('Webhook request failed', details);
+
       return res.status(webhookResponse.status).json({
-        error: webhookData?.error || 'Ошибка вебхука.',
+        error:
+          webhookData?.error ||
+          `Ошибка вебхука: ${webhookResponse.status} ${webhookResponse.statusText}`,
+        details,
+      });
+    }
+
+    if (!webhookData?.imageUrl) {
+      const details = {
+        webhookStatus: webhookResponse.status,
+        webhookStatusText: webhookResponse.statusText,
+        webhookBody: webhookData || rawBody || null,
+      };
+
+      console.error('Webhook success response missing imageUrl', details);
+
+      return res.status(502).json({
+        error: 'Вебхук не вернул imageUrl.',
+        details,
       });
     }
 
     return res.status(200).json({ imageUrl: webhookData.imageUrl });
-  } catch {
-    return res.status(502).json({ error: 'Не удалось связаться с вебхуком.' });
+  } catch (error) {
+    const details = {
+      message: error instanceof Error ? error.message : String(error),
+    };
+
+    console.error('Failed to call webhook', details);
+
+    return res.status(502).json({ error: 'Не удалось связаться с вебхуком.', details });
   }
 }
