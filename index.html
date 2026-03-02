@@ -9,24 +9,10 @@
   </head>
   <body>
     <header class="logo-header">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 80" aria-label="Wink">
-        <defs>
-          <linearGradient id="wink-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#FF7A3A"/>
-            <stop offset="100%" stop-color="#FF5B21"/>
-          </linearGradient>
-        </defs>
-        <text x="0" y="72" font-family="'Arial Black','Helvetica Neue',sans-serif"
-              font-weight="900" font-size="82" fill="white" letter-spacing="-3">WINK</text>
-        <!-- Chevron: two stacked right-pointing shapes forming ">" -->
-        <polygon points="272,4 316,42 272,80 292,80 336,42 292,4" fill="url(#wink-grad)"/>
-      </svg>
+      <img src="/wink_logo.png" alt="Wink" />
     </header>
     <main class="container">
-      <h1>Поиск постера фильма</h1>
-      <p class="subtitle">Введите название фильма, чтобы получить изображение с вебхука.</p>
-
-      <form id="movie-form" class="form">
+<form id="movie-form" class="form">
         <label for="movie-name">Название фильма</label>
         <div class="row">
           <input id="movie-name" name="movieName" type="text" placeholder="Например, Interstellar" required />
