@@ -21,13 +21,21 @@ body {
 
 .logo-header {
   display: flex;
-  justify-content: center;
-  padding: 1.5rem 0 0.5rem;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem 0.5rem;
 }
 
 .logo-header img {
-  height: 36px;
+  height: 44px;
   width: auto;
+}
+
+.logo-collab {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.05em;
 }
 
 .container {
