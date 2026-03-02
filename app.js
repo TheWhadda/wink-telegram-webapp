@@ -9,10 +9,8 @@ const statusEl = document.getElementById('status');
 const resultEl = document.getElementById('result');
 const previewEl = document.getElementById('preview');
 const downloadLink = document.getElementById('download-link');
-const zoomBtn = document.getElementById('zoom-btn');
 const modal = document.getElementById('image-modal');
 const modalImage = document.getElementById('modal-image');
-const closeModalBtn = document.getElementById('close-modal');
 const submitBtn = document.getElementById('submit-btn');
 
 form.addEventListener('submit', async (event) => {
@@ -27,7 +25,7 @@ form.addEventListener('submit', async (event) => {
   }
 
   submitBtn.disabled = true;
-  statusEl.textContent = 'Запрашиваем изображение...';
+  statusEl.textContent = 'Генерируем баннер...';
   resultEl.classList.add('hidden');
 
   try {
@@ -51,7 +49,6 @@ form.addEventListener('submit', async (event) => {
     previewEl.src = data.imageUrl;
     modalImage.src = data.imageUrl;
     downloadLink.href = data.imageUrl;
-    downloadLink.setAttribute('download', `${movieName}.jpg`);
     resultEl.classList.remove('hidden');
     statusEl.textContent = 'Готово!';
   } catch (error) {
@@ -61,14 +58,14 @@ form.addEventListener('submit', async (event) => {
   }
 });
 
-zoomBtn.addEventListener('click', () => {
+previewEl.addEventListener('click', () => {
   if (typeof modal.showModal === 'function') {
     modal.showModal();
   }
 });
 
-closeModalBtn.addEventListener('click', () => {
-  if (modal.open) {
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
     modal.close();
   }
 });

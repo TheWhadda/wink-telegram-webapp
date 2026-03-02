@@ -15,7 +15,7 @@
 <form id="movie-form" class="form">
         <label for="movie-name">Название фильма</label>
         <div class="row">
-          <input id="movie-name" name="movieName" type="text" placeholder="Например, Interstellar" required />
+          <input id="movie-name" name="movieName" type="text" placeholder="Например, Простоквашино 2026" required />
           <button id="submit-btn" type="submit">Сгенерировать</button>
         </div>
       </form>
@@ -25,15 +25,13 @@
       <section id="result" class="result hidden" aria-label="Результат">
         <img id="preview" alt="Превью постера" />
         <div class="actions">
-          <button id="zoom-btn" type="button">Увеличить</button>
-          <a id="download-link" download="movie-image.jpg">Скачать</a>
+          <a id="download-link" target="_blank" rel="noopener noreferrer">Скачать</a>
         </div>
       </section>
     </main>
 
     <dialog id="image-modal" class="modal">
       <img id="modal-image" alt="Увеличенное изображение" />
-      <button id="close-modal" type="button">Закрыть</button>
     </dialog>
 
     <script src="/app.js" defer></script>

@@ -118,6 +118,7 @@ a:active {
   border: 1px solid var(--border);
   border-radius: 12px;
   background: #fafafa;
+  cursor: pointer;
 }
 
 .actions {
