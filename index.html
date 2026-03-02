@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telegram Movie Poster WebApp</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <h1>Поиск постера фильма</h1>
+      <p class="subtitle">Введите название фильма, чтобы получить изображение с вебхука.</p>
+
+      <form id="movie-form" class="form">
+        <label for="movie-name">Название фильма</label>
+        <div class="row">
+          <input id="movie-name" name="movieName" type="text" placeholder="Например, Interstellar" required />
+          <button id="submit-btn" type="submit">Получить</button>
+        </div>
+      </form>
+
+      <p id="status" class="status" aria-live="polite"></p>
+
+      <section id="result" class="result hidden" aria-label="Результат">
+        <img id="preview" alt="Превью постера" />
+        <div class="actions">
+          <button id="zoom-btn" type="button">Увеличить</button>
+          <a id="download-link" download="movie-image.jpg">Скачать</a>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="image-modal" class="modal">
+      <img id="modal-image" alt="Увеличенное изображение" />
+      <button id="close-modal" type="button">Закрыть</button>
+    </dialog>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>
