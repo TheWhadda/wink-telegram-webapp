@@ -13,6 +13,26 @@ const modal = document.getElementById('image-modal');
 const modalImage = document.getElementById('modal-image');
 const submitBtn = document.getElementById('submit-btn');
 
+function waitForImage(url, maxAttempts = 12, delay = 2500) {
+  return new Promise((resolve, reject) => {
+    let attempts = 0;
+    function attempt() {
+      const img = new Image();
+      img.onload = () => resolve();
+      img.onerror = () => {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          reject(new Error('Изображение недоступно'));
+        } else {
+          setTimeout(attempt, delay);
+        }
+      };
+      img.src = url + '?t=' + Date.now();
+    }
+    attempt();
+  });
+}
+
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
@@ -49,6 +69,9 @@ form.addEventListener('submit', async (event) => {
     if (!data.imageUrl) {
       throw new Error('Нет imageUrl');
     }
+
+    statusEl.textContent = 'Загружаем изображение...';
+    await waitForImage(data.imageUrl);
 
     previewEl.src = data.imageUrl;
     modalImage.src = data.imageUrl;
