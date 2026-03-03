@@ -35,15 +35,19 @@ form.addEventListener('submit', async (event) => {
       body: JSON.stringify({ movieName }),
     });
 
-    const data = await response.json();
-
     if (!response.ok) {
-      const details = data.details ? `\nДетали: ${JSON.stringify(data.details)}` : '';
-      throw new Error((data.error || 'Не удалось получить изображение.') + details);
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error('Некорректный ответ сервера');
     }
 
     if (!data.imageUrl) {
-      throw new Error('Ответ не содержит imageUrl.');
+      throw new Error('Нет imageUrl');
     }
 
     previewEl.src = data.imageUrl;
@@ -52,7 +56,7 @@ form.addEventListener('submit', async (event) => {
     resultEl.classList.remove('hidden');
     statusEl.textContent = 'Готово!';
   } catch (error) {
-    statusEl.textContent = error.message || 'Произошла ошибка.';
+    statusEl.textContent = 'Возникла ошибка при генерации, попробуйте ещё раз';
   } finally {
     submitBtn.disabled = false;
   }
