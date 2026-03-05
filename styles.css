@@ -48,6 +48,60 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
+/* ── Tabs ── */
+
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  background: #111111;
+  border-radius: 12px;
+  padding: 4px;
+  border: 1px solid var(--border);
+}
+
+.tab {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.01em;
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.tab.active {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(255, 91, 33, 0.3);
+}
+
+/* ── Tab content ── */
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Form ── */
+
 .form label {
   display: block;
   font-weight: 600;
@@ -84,7 +138,8 @@ input::placeholder {
 }
 
 button,
-a {
+.actions a,
+.sem-actions a {
   border-radius: 10px;
   border: none;
   padding: 0.75rem 1.25rem;
@@ -96,16 +151,25 @@ a {
   cursor: pointer;
   transition: background 0.2s ease, transform 0.1s ease;
   letter-spacing: 0.01em;
+  display: inline-block;
+  text-align: center;
 }
 
 button:hover,
-a:hover {
+.actions a:hover,
+.sem-actions a:hover {
   background: var(--accent-hover);
 }
 
 button:active,
-a:active {
+.actions a:active,
+.sem-actions a:active {
   transform: scale(0.98);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .status {
@@ -114,6 +178,8 @@ a:active {
   color: var(--muted);
   font-size: 0.9rem;
 }
+
+/* ── Banner result ── */
 
 .result {
   margin-top: 1.2rem;
@@ -134,6 +200,58 @@ a:active {
   gap: 0.75rem;
   margin-top: 0.9rem;
 }
+
+/* ── Semantics result card ── */
+
+.semantics-result {
+  margin-top: 1.2rem;
+}
+
+.sem-card {
+  background: #111111;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+}
+
+.sem-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+}
+
+.sem-row + .sem-row {
+  border-top: 1px solid var(--border);
+}
+
+.sem-label {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.sem-value {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.sem-highlight {
+  color: var(--accent);
+  font-size: 1.25rem;
+}
+
+.sem-actions {
+  margin-top: 1rem;
+  display: flex;
+}
+
+.sem-actions a {
+  width: 100%;
+}
+
+/* ── Utilities ── */
 
 .hidden {
   display: none;
