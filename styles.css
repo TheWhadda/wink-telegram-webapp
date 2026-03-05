@@ -251,6 +251,21 @@ button:disabled {
   width: 100%;
 }
 
+/* ── Debug ── */
+
+.semantics-debug {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: #0a0a0a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: #a0a0a0;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-x: auto;
+}
+
 /* ── Utilities ── */
 
 .hidden {
