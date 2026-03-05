@@ -4,6 +4,22 @@ if (tg) {
   tg.expand();
 }
 
+/* ── Tabs ── */
+
+const tabs = document.querySelectorAll('.tab');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabs.forEach((tab) => {
+  tab.addEventListener('click', () => {
+    tabs.forEach((t) => t.classList.remove('active'));
+    tabContents.forEach((c) => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+/* ── Banner generation (existing) ── */
+
 const form = document.getElementById('movie-form');
 const statusEl = document.getElementById('status');
 const resultEl = document.getElementById('result');
@@ -94,5 +110,64 @@ previewEl.addEventListener('click', () => {
 modal.addEventListener('click', (e) => {
   if (e.target === modal) {
     modal.close();
+  }
+});
+
+/* ── Semantics generation ── */
+
+const semForm = document.getElementById('semantics-form');
+const semStatusEl = document.getElementById('semantics-status');
+const semResultEl = document.getElementById('semantics-result');
+const semMovieEl = document.getElementById('sem-movie');
+const semCountEl = document.getElementById('sem-count');
+const semLinkEl = document.getElementById('sem-spreadsheet-link');
+const semBtn = document.getElementById('semantics-btn');
+
+semForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(semForm);
+  const movieName = String(formData.get('movieName') || '').trim();
+
+  if (!movieName) {
+    semStatusEl.textContent = 'Введите название фильма.';
+    return;
+  }
+
+  semBtn.disabled = true;
+  semStatusEl.textContent = 'Генерируем семантику...';
+  semResultEl.classList.add('hidden');
+
+  try {
+    const response = await fetch('/api/generate-semantics', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ movieName }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error('Некорректный ответ сервера');
+    }
+
+    if (!data.spreadsheet_url) {
+      throw new Error('Нет spreadsheet_url');
+    }
+
+    semMovieEl.textContent = data.movie || movieName;
+    semCountEl.textContent = data.keywords_total ?? '—';
+    semLinkEl.href = data.spreadsheet_url;
+    semResultEl.classList.remove('hidden');
+    semStatusEl.textContent = 'Готово!';
+  } catch (error) {
+    semStatusEl.textContent = 'Возникла ошибка при генерации, попробуйте ещё раз';
+  } finally {
+    semBtn.disabled = false;
   }
 });

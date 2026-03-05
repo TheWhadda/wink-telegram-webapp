@@ -13,22 +13,62 @@
       <span class="logo-collab">x SYNCRA</span>
     </header>
     <main class="container">
-<form id="movie-form" class="form">
-        <label for="movie-name">Название фильма или сериала</label>
-        <div class="row">
-          <input id="movie-name" name="movieName" type="text" placeholder="Например, Простоквашино 2026" required />
-          <button id="submit-btn" type="submit">Сгенерировать</button>
-        </div>
-      </form>
 
-      <p id="status" class="status" aria-live="polite"></p>
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" data-tab="banner">Генерация баннера</button>
+        <button class="tab" data-tab="semantics">Генерация семантики</button>
+      </div>
 
-      <section id="result" class="result hidden" aria-label="Результат">
-        <img id="preview" alt="Превью постера" />
-        <div class="actions">
-          <a id="download-link" target="_blank" rel="noopener noreferrer">Скачать</a>
-        </div>
+      <!-- Banner Tab -->
+      <section id="tab-banner" class="tab-content active">
+        <form id="movie-form" class="form">
+          <label for="movie-name">Название фильма или сериала</label>
+          <div class="row">
+            <input id="movie-name" name="movieName" type="text" placeholder="Например, Простоквашино 2026" required />
+            <button id="submit-btn" type="submit">Сгенерировать</button>
+          </div>
+        </form>
+
+        <p id="status" class="status" aria-live="polite"></p>
+
+        <section id="result" class="result hidden" aria-label="Результат">
+          <img id="preview" alt="Превью постера" />
+          <div class="actions">
+            <a id="download-link" target="_blank" rel="noopener noreferrer">Скачать</a>
+          </div>
+        </section>
       </section>
+
+      <!-- Semantics Tab -->
+      <section id="tab-semantics" class="tab-content">
+        <form id="semantics-form" class="form">
+          <label for="semantics-name">Название фильма или сериала</label>
+          <div class="row">
+            <input id="semantics-name" name="movieName" type="text" placeholder="Например, Простоквашино 2026" required />
+            <button id="semantics-btn" type="submit">Сгенерировать</button>
+          </div>
+        </form>
+
+        <p id="semantics-status" class="status" aria-live="polite"></p>
+
+        <section id="semantics-result" class="semantics-result hidden" aria-label="Результат семантики">
+          <div class="sem-card">
+            <div class="sem-row">
+              <span class="sem-label">Фильм</span>
+              <span id="sem-movie" class="sem-value"></span>
+            </div>
+            <div class="sem-row">
+              <span class="sem-label">Ключевых слов</span>
+              <span id="sem-count" class="sem-value sem-highlight"></span>
+            </div>
+            <div class="sem-actions">
+              <a id="sem-spreadsheet-link" target="_blank" rel="noopener noreferrer">Открыть таблицу</a>
+            </div>
+          </div>
+        </section>
+      </section>
+
     </main>
 
     <dialog id="image-modal" class="modal">

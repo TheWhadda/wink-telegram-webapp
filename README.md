@@ -2,10 +2,15 @@
 
 Минимальный Telegram WebApp, который:
 
-1. Принимает название фильма.
-2. Отправляет запрос на серверный endpoint `/api/generate-image`.
-3. Endpoint вызывает внешний webhook из `WEBHOOK_URL` и передаёт заголовок `X-Webhook-Secret` со значением из `WEBHOOK_SECRET`.
-4. Получает JSON с `imageUrl`, показывает превью, позволяет увеличить и скачать.
+1. **Генерация баннера** — принимает название фильма, вызывает webhook, получает `imageUrl`, показывает превью с возможностью увеличить и скачать.
+2. **Генерация семантики** — принимает название фильма, вызывает отдельный webhook, получает количество ключевых слов и ссылку на Google-таблицу.
+
+## Структура API
+
+| Endpoint | Webhook ENV | Ответ |
+|---|---|---|
+| `/api/generate-image` | `WEBHOOK_URL` + `WEBHOOK_SECRET` | `{ imageUrl }` |
+| `/api/generate-semantics` | `SEMANTICS_WEBHOOK_URL` + `SEMANTICS_WEBHOOK_SECRET` | `{ status, movie, keywords_total, spreadsheet_url }` |
 
 ## Локальный запуск
 
@@ -22,4 +27,20 @@ vercel dev
 2. Добавьте переменные окружения:
    - `WEBHOOK_URL`
    - `WEBHOOK_SECRET`
+   - `SEMANTICS_WEBHOOK_URL`
+   - `SEMANTICS_WEBHOOK_SECRET`
 3. Выполните деплой.
+
+## Структура файлов
+
+```
+├── api/
+│   ├── generate-image.js      # Серверный endpoint для баннеров
+│   └── generate-semantics.js  # Серверный endpoint для семантики
+├── index.html
+├── app.js
+├── styles.css
+├── wink_logo.png
+├── vercel.json
+└── .env.example
+```

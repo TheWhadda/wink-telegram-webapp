@@ -1,0 +1,4 @@
+WEBHOOK_URL=https://example.com/webhook
+WEBHOOK_SECRET=your-secret-token
+SEMANTICS_WEBHOOK_URL=https://example.com/semantics-webhook
+SEMANTICS_WEBHOOK_SECRET=your-semantics-secret-token
