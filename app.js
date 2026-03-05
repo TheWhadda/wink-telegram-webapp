@@ -147,15 +147,16 @@ semForm.addEventListener('submit', async (event) => {
       body: JSON.stringify({ movieName }),
     });
 
+    const rawText = await response.text();
+    semDebugEl.textContent = rawText;
+    semDebugEl.classList.remove('hidden');
+
     let data;
     try {
-      data = await response.json();
+      data = JSON.parse(rawText);
     } catch {
-      throw new Error('Некорректный ответ сервера');
+      throw new Error('Ответ не является JSON');
     }
-
-    semDebugEl.textContent = JSON.stringify(data, null, 2);
-    semDebugEl.classList.remove('hidden');
 
     if (!response.ok) {
       throw new Error(data?.error || `HTTP ${response.status}`);
