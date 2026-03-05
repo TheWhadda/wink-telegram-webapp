@@ -122,6 +122,7 @@ const semMovieEl = document.getElementById('sem-movie');
 const semCountEl = document.getElementById('sem-count');
 const semLinkEl = document.getElementById('sem-spreadsheet-link');
 const semBtn = document.getElementById('semantics-btn');
+const semDebugEl = document.getElementById('semantics-debug');
 
 semForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -137,6 +138,7 @@ semForm.addEventListener('submit', async (event) => {
   semBtn.disabled = true;
   semStatusEl.textContent = 'Генерируем семантику...';
   semResultEl.classList.add('hidden');
+  semDebugEl.classList.add('hidden');
 
   try {
     const response = await fetch('/api/generate-semantics', {
@@ -145,15 +147,18 @@ semForm.addEventListener('submit', async (event) => {
       body: JSON.stringify({ movieName }),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
     let data;
     try {
       data = await response.json();
     } catch {
       throw new Error('Некорректный ответ сервера');
+    }
+
+    semDebugEl.textContent = JSON.stringify(data, null, 2);
+    semDebugEl.classList.remove('hidden');
+
+    if (!response.ok) {
+      throw new Error(data?.error || `HTTP ${response.status}`);
     }
 
     if (!data.spreadsheet_url) {
@@ -166,7 +171,7 @@ semForm.addEventListener('submit', async (event) => {
     semResultEl.classList.remove('hidden');
     semStatusEl.textContent = 'Готово!';
   } catch (error) {
-    semStatusEl.textContent = 'Возникла ошибка при генерации, попробуйте ещё раз';
+    semStatusEl.textContent = `Ошибка: ${error.message}`;
   } finally {
     semBtn.disabled = false;
   }
