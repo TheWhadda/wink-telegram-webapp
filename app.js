@@ -122,7 +122,6 @@ const semMovieEl = document.getElementById('sem-movie');
 const semCountEl = document.getElementById('sem-count');
 const semLinkEl = document.getElementById('sem-spreadsheet-link');
 const semBtn = document.getElementById('semantics-btn');
-const semDebugEl = document.getElementById('semantics-debug');
 
 semForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -138,7 +137,6 @@ semForm.addEventListener('submit', async (event) => {
   semBtn.disabled = true;
   semStatusEl.textContent = 'Генерируем семантику...';
   semResultEl.classList.add('hidden');
-  semDebugEl.classList.add('hidden');
 
   try {
     const response = await fetch('/api/generate-semantics', {
@@ -148,9 +146,6 @@ semForm.addEventListener('submit', async (event) => {
     });
 
     const rawText = await response.text();
-    semDebugEl.textContent = rawText;
-    semDebugEl.classList.remove('hidden');
-
     let data;
     try {
       data = JSON.parse(rawText);
